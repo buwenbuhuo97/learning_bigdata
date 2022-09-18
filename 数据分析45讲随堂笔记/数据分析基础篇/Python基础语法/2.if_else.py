@@ -18,5 +18,4 @@ def scores(score):
         else:
             print('Good Job')
 
-if __name__ == '__main__':
-    scores(95)
+scores(95)

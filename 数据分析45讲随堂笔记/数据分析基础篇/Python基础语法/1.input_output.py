@@ -15,5 +15,4 @@ def data(name,sum):
     print('hello,%s' %name)
     print('sum = %d' %sum)
 
-if __name__ == '__main__':
-    data("",0)
+data("",0)

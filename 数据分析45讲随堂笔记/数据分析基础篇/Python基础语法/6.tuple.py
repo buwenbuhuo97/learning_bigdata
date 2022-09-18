@@ -11,5 +11,4 @@ def tuple():
     tuples = ('tupleA','tupleB')
     print(tuples[0])
 
-if __name__ == '__main__':
-    tuple()
+tuple()

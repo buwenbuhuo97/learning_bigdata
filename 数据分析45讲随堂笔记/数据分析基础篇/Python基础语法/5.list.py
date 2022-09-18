@@ -18,5 +18,4 @@ def list_mt():
     lists.pop()
     print(lists)
 
-if __name__ == '__main__':
-    list_mt()
+list_mt()

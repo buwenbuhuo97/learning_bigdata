@@ -14,5 +14,4 @@ def for_in(sum):
         sum = sum + number
     print(sum)
 
-if __name__ == '__main__':
-    for_in(0)
+for_in(0)

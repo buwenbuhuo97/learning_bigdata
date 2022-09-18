@@ -17,5 +17,4 @@ def whiles(sum,number):
         number = number + 1
     print(sum)
 
-if __name__ == '__main__':
-    whiles(0,1)
+whiles(0,1)
