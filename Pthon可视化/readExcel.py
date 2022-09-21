@@ -29,13 +29,18 @@ for i in range(1,1001):#读取这1000个数据
         num6=num6+1
         price6 = price6 + float(cols_value_price[i])
 print(num1,num2,num3,num4,num5,num6,num1+num2+num3+num4+num5+num6)
+
+# 求出电脑的平均值
 avg_price1=price1/num1
 avg_price2=price2/num2
 avg_price3=price3/num3
 avg_price4=price4/num4
 avg_price5=price5/num5
 avg_price6=price6/num6
+# 给出标签
 labels=['lenovo','Huawei','hp','Dell','ASUS','other brand']
+
+
 #关于市场份额的扇形图
 X=[num1,num2,num3,num4,num5,num6]#数据成员
 fig = plt.figure()

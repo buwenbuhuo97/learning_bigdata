@@ -6,7 +6,10 @@ import urllib.request,urllib.error
 import xlwt
 import sqlite3
 
+
+# 最终执行
 def main():
+    # https://search.jd.com/Search?keyword=%E7%94%B5%E8%84%91&wq=%E7%94%B5%E8%84%91&pvid=11af15b3bc994fe99fcedfdf9695cb5a&page=9&s=236&click=0
     baseurl = "https://search.jd.com/Search?keyword=%E7%94%B5%E8%84%91&wq=%E7%94%B5%E8%84%91&pvid=11af15b3bc994fe99fcedfdf9695cb5a&page="
     savepath=".\\computer.xls"
     #爬取网页 并提取信息
@@ -14,23 +17,33 @@ def main():
 
     #保存数据
     saveData(datalist,savepath)
+
 url1="&s=1&click=0"#补充baseurl形成网页列表形式
-# 电脑信息查找规则
+# 电脑标签   div class="p-name p-name-type-2" 处
 findName = re.compile(r'<em>(.*?)<font class="skcolor_ljg">')    #生成正则表达式的对象，表示规则
+# 电脑价格  class="p-price"处
 price = re.compile(r'<i data-price="(.*?)</i>')
+# 网址 div class="p-shop"处
 shop = re.compile(r'<a class="curr-shop hd-shopname"(.*?)</a>')
+# 品牌 待定
 web = re.compile(r'<a href="(.*?)" onclick="')
-def getData(baseurl):
-    datalist=[]
+
+#  第二步
+def getData(baseurl):  
+    # 提前定义一个列表list用来存放数据
+    datalist=[] 
     for i in range(0,60):
+        # 从1开始
         url = baseurl+str(i*2+1)+url1
         html=askURL(url)
-        #逐一进行解析
+        # 通过BS4对网页进行解析逐一进行解析 
         soup =BeautifulSoup(html,"html.parser")
+        # div class="gl-i-wrap"  
         for item in soup.select("div.gl-i-wrap"):
             data = []#保存一部电脑的全部信息
             item = str(item)
 
+            # div class="p-name p-name-type-2" 处
             name = re.findall(findName,item)#re库通过正则表达式查找指定的字符串
             namearray1 = ("联想")
             namearray2 = ("华为")
@@ -50,7 +63,7 @@ def getData(baseurl):
                 print("https:"+Web[0])
                 data.append("https:"+Web[0])
 
-                #确定电脑品牌
+                # 确定电脑品牌 如果在数组中，就是这个品牌
                 if namearray1 in name[0]:
                     brand="联想"
                 elif namearray2 in name[0]:
@@ -69,7 +82,7 @@ def getData(baseurl):
                 datalist.append(data)
     return datalist
 
-#得到指定一个url的网页信息
+#得到指定一个url的网页信息    第一步
 def askURL(url):
     #用户代理表示不是爬虫，模拟头部信息
     head={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36"}
@@ -78,6 +91,7 @@ def askURL(url):
     try:
         response=urllib.request.urlopen(request)
         html=response.read().decode("utf-8")
+        # 此处用来测试是否模拟成功
         #print(html)
     #异常处理机制
     except urllib.error.URLError as e:
@@ -87,9 +101,12 @@ def askURL(url):
             print(e,"reason")
     return html
 
+
+# 第三步
 def saveData(datalist,savepath):
     book = xlwt.Workbook(encoding="utf-8")#utf-8编码方式
     sheet = book.add_sheet('information')#命名Excel文件sheet名字为information
+    # 添加列名
     col = ("电脑标签","电脑价格","网址","品牌")
     for i in range(0,4):
         sheet.write(0,i,col[i])#列名的写入
