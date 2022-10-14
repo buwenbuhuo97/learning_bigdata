@@ -51,16 +51,13 @@ def getData(baseurl):
             namearray4 = ("戴尔")
             namearray5 = ("华硕")
             if name.__len__()!=0: #不抓取带有 京东电脑 标签的电脑
-                print(name)
                 data.append(name)#在data中加入name
 
                 Price=re.findall(price,item)#抓取价格标签内数据
                 index=Price[0].find('>')#只提取价格标签数字部分
-                print(Price[0][index+1:])
                 data.append(Price[0][index+1:])
 
                 Web = re.findall(web,item)#抓取网页部分信息
-                print("https:"+Web[0])
                 data.append("https:"+Web[0])
 
                 # 确定电脑品牌 如果在数组中，就是这个品牌
@@ -75,8 +72,7 @@ def getData(baseurl):
                 elif namearray5 in name[0]:
                     brand="华硕"
                 else:
-                    brand="其他品牌" 
-                print(brand)
+                    brand="其他品牌"
                 data.append(brand)
 
                 datalist.append(data)
@@ -110,6 +106,7 @@ def saveData(datalist,savepath):
     col = ("电脑标签","电脑价格","网址","品牌")
     for i in range(0,4):
         sheet.write(0,i,col[i])#列名的写入
+
     for i in range(0,1000):#
         print("第%d条"%i)#将抓取的前1000条数据存入Excel中
         data = datalist[i]#按行提取数据
